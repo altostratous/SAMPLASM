@@ -1,0 +1,39 @@
+ROOTS     START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING	*,12
+          LR	2,1
+          L		3,0(2)
+          ST	3,POLADDR
+          L		5,12(2)			LET ADDRESS OF RESULT BE IN 5
+          LA	6,0				LET 6 INDEX ON 5
+          LA	7,0				LET HAVE 7 AS 0 VALUE
+          L		3,4(2)
+          L		4,8(2)
+          L	    4,0(4)			LET 3 AND 4 BE A AND B
+          L		3,0(3)
+NEXT      ST	4,XVAL
+          LA	1,POLADDR
+		  ST    13,SAVE+4
+		  LA	13,SAVE
+		  L		15,=V(POLEVAL)
+		  BALR  14,15
+		  L		13,SAVE+4
+          C		7,POLRES
+          BNZ	SKIP
+          ST	4,4(6,5)
+          LA	6,4(6)
+SKIP	  S		4,=F'1'
+		  CR	4,3
+		  BNL	NEXT
+		  SRA	6,2
+		  ST	6,0(5)			STORE LIST LENGTH
+          LM	14,12,12(13)
+          BR	14
+XVAL	  DS	F
+POLRES	  DS	F
+POLADDR	  DS	F
+		  DC	A(XVAL)
+		  DC    A(POLRES)	
+SAVE	  DS	18F
+          END

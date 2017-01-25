@@ -1,0 +1,22 @@
+POLEVAL   START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING	*,12
+          LR	2,1
+          L		3,0(2) 				LET ADDRESS OF POLY GO IN 3
+          L		4,4(2)				LET ADDRESS OF X	GO IN 4
+          L		4,0(4)				LET VALUE OF X GO IN 4
+          L		5,0(3)				LET VALUE OF N GO IN 5
+          LA	3,4(3)				LET 3 POINT TO COEFFICIENTS
+          LA	6,0					LET ACCUMULATE THE RESULT IN 7
+          LA	7,0
+NEXT      MR	6,4					MULTIPLY X TO RESULT
+          A 	7,0(3)				ADD THE COEFFICIENT IN RESULT
+          LA	3,4(3)				GO TO NEXT COEFFICIENT
+          S 	5,=F'1'
+          BNE	NEXT
+          L		8,8(2)
+          ST	7,0(8)
+          LM	14,12,12(13)
+          BR	14
+          END

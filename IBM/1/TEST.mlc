@@ -1,0 +1,35 @@
+TEST      START 0
+		  STM	14,12,12(13)
+		  BALR  12,0
+		  USING *,12
+* 		  TEST POLEVAL FUNCTION 
+		  LA	1,PARAMS
+		  ST    13,SAVE+4
+		  LA	13,SAVE
+		  L		15,=V(POLEVAL)
+		  BALR  14,15
+		  L		13,SAVE+4
+*		  HERE PRES SHOULD CONTAIN 20 OR 14H
+*		  TEST ROOTS FUNCTION
+		  LA	1,RPARAMS
+		  ST    13,SAVE+4
+		  LA	13,SAVE
+		  L		15,=V(ROOTS)
+		  BALR  14,15		  
+		  LM	14,12,12(13)
+		  BR	14
+POL1	  DC	F'3',F'1',F'3',F'2'
+XVAL	  DC	F'3'
+PRES	  DS	F
+PARAMS	  DC	A(POL1)
+		  DC	A(XVAL)
+		  DC	A(PRES)
+LOW		  DC	F'-10'
+HIGH	  DC	F'0'
+RPARAMS	  DC	A(POL1)
+		  DC	A(LOW)
+		  DC	A(HIGH)
+		  DC	A(RLIST)
+SAVE	  DS	18F
+RLIST	  DS	10F
+          END
