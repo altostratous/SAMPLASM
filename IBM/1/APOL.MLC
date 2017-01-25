@@ -1,0 +1,35 @@
+APOL      START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING	*,12
+          L		2,0(1)			LET 2 POINT TO FIRST POLYNOMIAL
+          L		3,4(1)			LET 3 POINT TO SECOND POLYNOMIAL
+          L		4,8(1)			LET 4 POINT TO THIRD POLYNOMIAL
+          L		5,0(2)			GET FIRST SIZE
+          C		5,0(3)			COMPARE TO SECOND SIZE
+          BH	SKIPEX			SWAP POLIES IF FIRST IS SMALLER
+          LR	5,2
+          LR	2,3
+          LR	3,5
+SKIPEX	  L		5,0(2)
+		  ST	5,0(4)			SET RESULT SIZE
+		  S		5,0(3)
+		  L		7,0(3)
+		  LA	2,4(2)
+		  LA	3,4(3)
+		  LA	4,4(4)
+FNEXT	  L		6,0(2)
+		  ST	6,0(4)
+		  LA	4,4(4)
+		  LA	2,4(2)
+		  BCT	5,FNEXT
+SNEXT	  L		6,0(2)
+		  A		6,0(3)
+		  ST	6,0(4)
+		  LA	4,4(4)
+		  LA	2,4(2)
+		  LA	3,4(3)
+		  BCT	7,SNEXT
+          LM	14,12,12(13)
+          BR	14
+          END
