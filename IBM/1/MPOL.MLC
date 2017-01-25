@@ -1,0 +1,38 @@
+MPOL      START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING	*,12
+          L		2,0(1)			LET 2 POINT TO FIRST POLYNOMIAL
+          L		3,4(1)			LET 3 POINT TO SECOND POLYNOMIAL
+          L		4,8(1)			LET 4 POINT TO THIRD POLYNOMIAL
+          L		5,0(2)
+          L		7,0(3)
+          AR	7,5
+          BCTR	7,0
+          ST	7,0(4)			SET RESULT SIZE
+          LA	6,0
+          SLA	7,2
+FNEXT     ST	6,0(4,7)
+		  S		7,=F'3'
+          BCT	7,FNEXT
+	      L		5,0(2)
+	      SLA	5,2
+OUTER     L		6,0(3)
+     	  SLA	6,2			
+INNER	  LA	8,0				CALCULATE COEFFICIENT
+		  L		9,0(2,5)		...
+		  L		10,0(3,6)		...
+		  MR	8,10			...
+		  LA	8,0				CALCULATE COEFFICIENT POSITION
+		  AR	8,5				...
+		  AR	8,6				...
+		  S		8,=F'4'
+		  A		9,0(4,8)		ADD TO POSITION
+		  ST	9,0(4,8)
+		  S		6,=F'3'
+          BCT	6,INNER
+          S		5,=F'3'
+          BCT	5,OUTER
+          LM	14,12,12(13)
+          BR	14
+          END
