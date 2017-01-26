@@ -10,11 +10,20 @@ TEST      START 0
 		  L		13,SAVE+4
 		  LM	14,12,12(13)
 		  BR	14
-EQ		  DC	F'2',F'4',F'6',F'18'
-EQ1		  DC	F'4',F'5',F'6',F'24'
-EQ2		  DC	F'3',F'1',F'-2',F'4'
+EQ00	  DC	F'1'
+EQ01	  DC	F'1'
+EQ02	  DC 	F'5'
+EQ03	  DC	F'18'
+EQ10	  DC	F'1'
+EQ11	  DC	F'2'
+EQ12	  DC 	F'7'
+EQ13	  DC	F'26'
+EQ20	  DC	F'-1'
+EQ21	  DC	F'2'
+EQ22	  DC 	F'2'
+EQ23	  DC	F'7'
 SIZE	  DC	F'3'
 STRD	  DC	F'16'
-PARAM	  DC	A(EQ,STRD,SIZE)
+PARAM	  DC	A(EQ00,STRD,SIZE)
 SAVE	  DS	18F
           END

@@ -2,12 +2,17 @@ GJSOL     START 0
 		  STM	14,12,12(13)
 		  BALR	12,0
 		  USING *,12
+*		  MAKE THE MATRIX TRIANGULAR
 		  L		2,0(1)   		LET 2 BE THE ADDRESS
 		  L		3,4(1)			LET 3 BE THE STIDE
 		  L		3,0(3)
 		  L		4,8(1)			LET 4 BE THE SIZE
 		  L		4,0(4)
-		  LR	5,4
+		  LR	11,4
+		  LA	11,1(11)
+		  LR	10,4
+		  BCTR	10,0
+OUTER	  LR	5,4
 		  BCTR	5,0
 		  LR	6,2
 NEXT	  AR	6,3
@@ -17,28 +22,98 @@ NEXT	  AR	6,3
 		  LCR	9,9
 *		  CALL GAUSS JORDAN STEP		  
 		  ST	9,COEF
-		  ST	2,SADDR
-		  ST	6,DADDR
+		  ST	2,APARAM
+		  ST	6,APARAM+4
 		  LA	4,1(4)
 		  ST	4,ASIZE
 		  BCTR	4,0
 		  LA	1,APARAM
 		  ST	13,SAVE+4
 		  LA	13,SAVE
-		  L		15,=V(GST)
-		  BALR	14,15
+		  BAL	14,GST
 		  L		13,SAVE+4
 		  BCT	5,NEXT
+		  LA	2,4(2)
+		  AR	2,3
+		  BCTR	4,0
+		  BCT	10,OUTER		 
+*		  MAKE THE MATRIX DIAGONAL 		  
+		  LCR	3,3				COMPLEMENT THE STRIDE
+		  L		4,8(1)			LET 4 BE THE SIZE
+		  L		4,0(4)
+		  LR	10,4
+		  BCTR	10,0
+OUTER2	  LR	5,4
+		  BCTR	5,0
+		  LR	6,2
+NEXT2	  AR	6,3
+		  LA	8,0
+		  L		9,0(6)
+		  D		8,0(2)
+		  LCR	9,9
+*		  CALL GAUSS JORDAN STEP		  
+		  ST	9,COEF
+		  SLA	5,2
+		  SR	2,5
+		  ST	2,APARAM
+		  AR	2,5
+		  SR	6,5
+		  ST	6,APARAM+4
+		  AR	6,5
+		  SRA	5,2
+		  ST	11,ASIZE
+		  LA	1,APARAM
+		  ST	13,SAVE+4
+		  LA	13,SAVE
+		  BAL	14,GST
+		  L		13,SAVE+4
+		  BCT	5,NEXT2
+		  S		2,=F'4'
+		  AR	2,3
+		  BCTR	4,0
+		  BCT	10,OUTER2
+*		  MAKE THE MATRIX IDENTITY
+		  L		2,0(1)   		LET 2 BE THE ADDRESS
+		  L		3,4(1)			LET 3 BE THE STRIDE
+		  L		3,0(3)
+		  L		4,8(1)			LET 4 BE THE SIZE
+		  L		4,0(4)
+		  LR	5,4
+		  SRA	5,2
+NEXTI	  LA	6,0
+		  L		7,0(2,5)
+		  D		6,0(2)
+		  ST	7,0(2,5)
+		  S		5,=F'4'
+		  AR	2,3
+		  LA	2,4(2)
+		  BCT	4,NEXTI
 		  LM	14,12,12(13)
 		  BR	14
 SIZE	  DS	F
 STRD	  DS	F
-ADDR	  DS	F
-PARAM	  DC	A(ADDR,STRD,SIZE)
-SADDR	  DS	F
-DADDR	  DS	F
+PARAM	  DS	F
+		  DC	A(STRD,SIZE)
 ASIZE	  DS	F
 COEF	  DS	F
-APARAM	  DC	A(SADDR,DADDR,ASIZE,COEF)
+APARAM	  DS	2F				SOURCE ADDR AND DEST ADDR
+		  DC	A(ASIZE,COEF)
 SAVE	  DS	18F
+GST	      STM	14,12,12(13)
+		  L		2,0(1)			SOURCE ADDRESS
+		  L		3,4(1)			DEST ADDRESS
+		  L		4,8(1)		    SIZE
+		  L		4,0(4)
+		  L		5,12(1)			COEFFICIENT
+		  L		5,0(5)
+GSTN	  LA	6,0
+		  L		7,0(2)
+		  MR	6,5
+		  A		7,0(3)
+		  ST	7,0(3)
+		  LA	2,4(2)
+		  LA	3,4(3)
+		  BCT	4,GSTN
+		  LM	14,12,12(13)
+		  BR	14
           END
