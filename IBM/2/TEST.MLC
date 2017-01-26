@@ -7,16 +7,23 @@ TEST      START 0
 		  LA	13,STACK
 		  L		15,=V(HANOI)
 		  BALR	14,15
-		  L		13,STACK+4  
+		  L		13,STACK+4
+		  L		2,OUTPUT
+		  SRA	2,1
+		  ST	2,STEPS
 		  LM	14,12,12(13)
 		  BR	14
-DISCS	  DC	F'2'
-PIPE1	  DC	F'1'
-PIPE2	  DC	F'2'
-PIPE3	  DC	F'3'
+STEPS	  DS	F
+DISCS	  DC	F'3'
+PIPE1	  DC	C'A'
+PIPE2	  DC	C'B'
+PIPE3	  DC	C'C'
+OUTPUT	  DC	F'0'
+TXT		  DC	50C' '
 PARAM	  DC	A(DISCS)
 		  DC	A(PIPE1)
 		  DC	A(PIPE2)
 		  DC	A(PIPE3)
+		  DC	A(OUTPUT)
 STACK	  DS	180F
           END
