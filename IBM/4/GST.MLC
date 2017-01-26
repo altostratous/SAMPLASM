@@ -1,0 +1,18 @@
+GST	      START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING *,12 
+		  L		2,0(1)			SOURCE ADDRESS
+		  L		3,4(1)			DEST ADDRESS
+		  L		4,8(1)		    SIZE
+		  L		5,12(1)			COEFFICIENT
+NEXT	  LA	6,0
+		  L		7,0(2)
+		  MR	6,5
+		  A		7,0(3)
+		  LA	2,4(2)
+		  LA	3,4(3)
+		  BCT	4,NEXT
+		  LM	14,12,12(13)
+		  BR	14
+          END
