@@ -4,6 +4,7 @@
 # But not these files...
 !.gitignore
 !*.mlc
+!*.asm
 # etc...
 
 # ...even if they are in subdirectories
