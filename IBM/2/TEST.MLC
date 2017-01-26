@@ -1,0 +1,22 @@
+TEST      START 0
+		  STM	14,12,12(13)
+		  BALR  12,0
+		  USING *,12
+		  LA	1,PARAM
+		  ST    13,STACK+4
+		  LA	13,STACK
+		  L		15,=V(HANOI)
+		  BALR	14,15
+		  L		13,STACK+4  
+		  LM	14,12,12(13)
+		  BR	14
+DISCS	  DC	F'2'
+PIPE1	  DC	F'1'
+PIPE2	  DC	F'2'
+PIPE3	  DC	F'3'
+PARAM	  DC	A(DISCS)
+		  DC	A(PIPE1)
+		  DC	A(PIPE2)
+		  DC	A(PIPE3)
+STACK	  DS	180F
+          END
