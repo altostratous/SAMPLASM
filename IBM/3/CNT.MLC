@@ -1,0 +1,35 @@
+CNT       START 0
+		  STM	14,12,12(13)
+		  BALR	12,0
+		  USING *,12
+		  LA	3,TXT
+		  LA	2,1				SET 2 TO TRUE INDICATING THAT LAST CHAR WAS A SEPARATOR
+		  LA	4,100
+		  LA	5,0			    TO COUNT WORDS
+		  BCTR	3,0
+NEXT	  LA	3,1(3)
+		  CLI	0(3),C' '		CHECK FOR SEPARATORS
+		  BE	ONSEP
+		  CLI	0(3),37		LINE FEED
+		  BE	ONSEP
+		  CLI	0(3),C'!'
+		  BE	ONSEP
+		  CLI	0(3),C'.'
+		  BE	ONSEP
+		  CLI	0(3),C','
+		  BE	ONSEP
+		  CLI	0(3),C';'
+		  BE	ONSEP
+		  LA	2,0
+		  BCT	4,NEXT
+ONSEP	  C		2,=F'0'
+		  BNE	OUT
+		  LA	5,1(5)
+OUT		  LA	2,1
+		  BCT	4,NEXT
+		  ST	5,COUNT
+		  LM	14,12,12(13)
+		  BR	14
+TXT		  DC	CL100'THIS IS NOT THE MOST IMPORTANT, THING!WORK NOW.'
+COUNT	  DC	F'0'
+          END
