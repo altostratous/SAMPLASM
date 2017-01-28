@@ -7,8 +7,8 @@ datas       segment
     arr_start   dw      ?
     arr_end     dw      ?
     off_ret     dw      ?
-    array       dw      5, 4, 3, 2, 1, -5, -10, 8, 253, 8, 1, 0, 8
-    n           dw      12  
+    array       dw      5, 4, 6, 7, 2
+    n           dw      5  
 datas       ends
 codes       segment
     assume      cs:codes, ds:datas, ss:stacks, es:datas
@@ -51,7 +51,7 @@ nextsi: cmp     si, bx
         add     si, 2
         jmp     nextsi
 nextdi: cmp     ax, word ptr [di]
-        jpo     break 
+        jg      break 
         sub     di, 2
         ;cmp     si, di
         ;jnl     lret
